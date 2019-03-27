@@ -10,6 +10,6 @@ test('products are not empty', () => {
 test('product with valid id is returned by service', () => {
     const product = productService.getProductById("1");
     expect(product == undefined).toBeFalsy();
-    expect(product.id).toBe("1");
+    expect(product!!.id).toBe("1");
 });
 

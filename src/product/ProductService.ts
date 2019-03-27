@@ -1,3 +1,4 @@
+import { Product } from "./Domains";
 
 
 const products = {
@@ -6992,17 +6993,15 @@ const products = {
 };
 
 
-
-
 class ProductService {
-    private productDS = products.products;
+    private productDS : Product[] = products.products;
 
-    get products(): any{
+    get products(): Product[]{
         console.log("products found ", products.products.length);
         return this.productDS;
     }
 
-    getProductById(id: String): any{
+    getProductById(id: String) {
         const product = this.productDS.find(product => product.id == id );
         return product;
     }
