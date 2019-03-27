@@ -5,11 +5,11 @@
 }
 
 .product-wrapper{
-    margin: 4px;
-    padding: 4px;
-    border-bottom: 1px solid green;
+    margin: 14px;
+    border: 1px solid rgb(232, 233, 232);
 }
 
+
 .right-component{
-    padding-left: 10px;
+    padding: 10px;
 }
