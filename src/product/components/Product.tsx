@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Product } from '../Domains';
 import Card from '@material-ui/core/Card';
 import './product.css';
+import { Button, CardActions, CardContent } from '@material-ui/core';
 
 
 
@@ -13,14 +14,20 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
             <div className="left-component">
                     <p style={{background: 'rgb(232, 233, 232)', height:'100%', margin: '0px'}}></p>
             </div>
-            <div className="right-component">
-                <h1>{productComponentProp.product.name}</h1>
-                <p>
-                    {productComponentProp.product.cpu} |
-                    {productComponentProp.product.ram} |
-                    {productComponentProp.product.opSys}
-                </p>
-            </div>
+            <CardContent className="right-component">
+                <div className="descriptions">
+                    <p className="header">{productComponentProp.product.name}</p>
+                    <ul className="product-features-list">
+                        <li>{productComponentProp.product.cpu} </li>
+                        <li>{productComponentProp.product.ram} GB RAM </li>
+                        <li>{productComponentProp.product.opSys} Operation System</li>
+                    </ul>
+                </div>
+                <CardActions>
+                    <Button variant="contained" color="primary" >Add To Cart</Button>
+                    <Button color="primary">View More</Button>
+                </CardActions>
+            </CardContent>
         </div>
     </Card>
 )

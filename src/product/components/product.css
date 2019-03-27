@@ -4,6 +4,12 @@
     grid-template-columns: 1fr 5fr;
 }
 
+@media (max-width: 480px) {
+    .product{
+        display: block;
+    }
+}
+
 .product-wrapper{
     margin: 14px;
     border: 1px solid rgb(232, 233, 232);
@@ -12,4 +18,8 @@
 
 .right-component{
     padding: 10px;
+}
+
+.header{
+    font-size: 24px;
 }
