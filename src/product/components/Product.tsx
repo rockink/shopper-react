@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { Product } from '../Domains';
 import Card from '@material-ui/core/Card';
 import './product.css';
 import { Button, CardActions, CardContent } from '@material-ui/core';
+import productService from '../ProductService';
 
 
 
@@ -25,6 +27,7 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
                 </div>
                 <CardActions>
                     <Button variant="contained" color="primary" >Add To Cart</Button>
+                    
                     <Button color="primary">View More</Button>
                 </CardActions>
             </CardContent>
