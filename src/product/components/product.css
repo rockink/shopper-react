@@ -6,8 +6,11 @@
 
 @media (max-width: 480px) {
     .product{
-        display: block;
+        /* display: block; */
+        grid-template-columns: none;
+        grid-template-rows: 200px 1fr;
     }
+    
 }
 
 .product-wrapper{
