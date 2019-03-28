@@ -1,0 +1,28 @@
+.product{
+    display: inline-block;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+@media (max-width: 480px) {
+    .product{
+        /* display: block; */
+        grid-template-columns: none;
+        grid-template-rows: 200px 1fr;
+    }
+    
+}
+
+.product-wrapper{
+    margin: 14px;
+    border: 1px solid rgb(232, 233, 232);
+}
+
+
+.right-component{
+    padding: 10px;
+}
+
+.header{
+    font-size: 24px;
+}
