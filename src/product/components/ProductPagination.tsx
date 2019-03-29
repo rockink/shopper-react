@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import productService from '../ProductService';
 import { ProductsComponent } from './Product';
 
+import './productPagination.css';
 
 export interface ReactRouterMatch { match: match }
 export const PaginationProducts = (props: ReactRouterMatch) => {
@@ -16,7 +17,7 @@ export const PaginationProducts = (props: ReactRouterMatch) => {
   const products = productService.getPaginatedProducts(pageIndex);
 
   return (
-  <div>
+  <div className="PaginationProducts">
     <ProductsComponent products={products} />
     <PaginationCounter {...props} />
   </div>
@@ -36,7 +37,7 @@ export class PaginationCounter extends React.Component<ReactRouterMatch> {
       return (<div className="PaginationCounter">
         {[0, 1, 2, 3, 4].map(index => (
         <p className={`pagination-index ${index == page ? "selected-pagination-index": ""}`} key={index}>
-          <Link to={`/?page=${index}`}>{index}</Link>
+          {index == page ? <a>{index}</a> : <Link to={`/?page=${index}`}>{index}</Link>}
         </p>))}
       </div>);
     }

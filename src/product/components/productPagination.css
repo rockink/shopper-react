@@ -1,0 +1,29 @@
+
+
+.PaginationCounter > p{
+    display: inline-block;
+    margin: 8px;
+}
+
+.PaginationCounter * {
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.PaginationCounter {
+    text-align: center;
+}
+
+
+
+.selected-pagination-index {
+    background: #00bbd3 !important;
+    color: black !important;
+    padding: 10px !important;
+    border-radius: 8px;
+
+}
+
+.selected-pagination-index a {
+    color: white;
+}

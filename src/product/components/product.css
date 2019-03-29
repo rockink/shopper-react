@@ -42,3 +42,15 @@
     list-style: none;
     padding: 0px;
 }
+
+.material-button{
+    position: static !important;
+}
+
+.add-cart{
+    background: #00bbd3 !important;
+}
+
+.view-more{
+    /* color: #00bfd7 !important;; */
+}

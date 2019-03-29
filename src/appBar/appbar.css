@@ -1,0 +1,22 @@
+.app-bar{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #00bfd7;
+    width: 100%;
+    color: white;
+}
+
+.app-bar-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 12px;
+}
+
+.left-column{
+    text-align: left;
+}
+
+.right-column{
+    text-align: right;
+}
