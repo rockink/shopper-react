@@ -1,0 +1,9 @@
+.ProductDetailComponent{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 20px;
+}
+
+.left-component{
+    background: gainsboro;
+}

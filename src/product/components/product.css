@@ -25,4 +25,20 @@
 
 .header{
     font-size: 24px;
+    margin: 0px;
+    margin-bottom: 8px;
+}
+
+.product-chips > div{
+    margin: 4px;
+}
+
+.product-features-list > li {
+    margin: 0px;
+    padding: 6px;
+}
+
+.product-features-list{
+    list-style: none;
+    padding: 0px;
 }

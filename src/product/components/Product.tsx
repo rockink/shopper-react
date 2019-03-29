@@ -5,7 +5,9 @@ import Card from '@material-ui/core/Card';
 import './product.css';
 import { Button, CardActions, CardContent } from '@material-ui/core';
 
-import productService from '../ProductService';
+import { Link } from 'react-router-dom';
+
+import Chip from '@material-ui/core/Chip';
 
 export interface ProductComponentProp { product: Product, key?: any };
 export const ProductComponent = (productComponentProp: ProductComponentProp) => (
@@ -17,15 +19,25 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
             <CardContent className="right-component">
                 <div className="descriptions">
                     <p className="header">{productComponentProp.product.name}</p>
-                    <ul className="product-features-list">
-                        <li>{productComponentProp.product.cpu} </li>
-                        <li>{productComponentProp.product.ram} GB RAM </li>
-                        <li>{productComponentProp.product.opSys} Operation System</li>
-                    </ul>
+
+                    <div className="product-chips">
+                        <Chip label={`${productComponentProp.product.ram} GB`}  />
+                        <Chip label={`${productComponentProp.product.company}`}  />
+                        <Chip label={`${productComponentProp.product.storage}`}  />
+                        
+                    </div>
+                    <p className="product-features-list">
+                        <p>{productComponentProp.product.opSys} Operating System</p>
+                    </p>
+
+                    <h1>${productComponentProp.product.price}</h1>
+
                 </div>
                 <CardActions>
                     <Button variant="contained" color="primary" >Add To Cart</Button>
-                    <Button color="primary">View More</Button>
+                    <Link to={`/product/${productComponentProp.product.id}`}>
+                        <Button color="primary">View More</Button>
+                    </Link>
                 </CardActions>
             </CardContent>
         </div>
