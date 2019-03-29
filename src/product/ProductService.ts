@@ -1,4 +1,5 @@
 import { Product } from "./Domains";
+import { promised } from "q";
 
 
 const products = {
@@ -6994,7 +6995,13 @@ const products = {
 
 
 class ProductService {
+    //displays only products that we are displaying in the front-end product components 
     private productDS : Product[] = products.products.slice(1, 10);
+    
+    // contains all the product 
+    private allProducts = products.products;
+
+    private productDisplayCount: number = 10;
 
     get products(): Product[]{
         console.log("products found ", products.products.length);
@@ -7004,6 +7011,17 @@ class ProductService {
     getProductById(id: String) {
         const product = this.productDS.find(product => product.id == id );
         return product;
+    }
+
+    getPaginatedProducts(paginationIdex: number): Product[]{
+        if(paginationIdex == undefined) paginationIdex = 0;
+
+        const products = this.allProducts
+            .slice(this.productDisplayCount * paginationIdex, this.productDisplayCount * ++paginationIdex);
+        this.productDS = products;
+
+        return products;
+
     }
 }
 

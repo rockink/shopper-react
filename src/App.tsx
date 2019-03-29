@@ -6,6 +6,7 @@ import { ProductsComponent } from './product/components/Product';
 import productService from './product/ProductService';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { ProductDetailComponent } from './product/components/ProductDetailComponent';
+import { PaginationProducts } from './product/components/ProductPagination';
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route exact path="/product/:id" component={ProductDetailComponent} />
-          <Route exact path="/" render={()=> <ProductsComponent products={productService.products} />} />
+          <Route exact path="/" component={PaginationProducts} />
         </div>
       </Router>
     );
