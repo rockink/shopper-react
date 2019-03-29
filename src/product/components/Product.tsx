@@ -34,9 +34,9 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
 
                 </div>
                 <CardActions>
-                    <Button className="material-button" variant="contained" color="primary" >Add To Cart</Button>
+                    <Button className="material-button add-cart" variant="contained" color="primary" >Add To Cart</Button>
                     <Link to={`/product/${productComponentProp.product.id}`}>
-                        <Button className="material-button" color="primary">View More</Button>
+                        <Button className="material-button view-more" color="primary">View More</Button>
                     </Link>
                 </CardActions>
             </CardContent>
