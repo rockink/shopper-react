@@ -6994,7 +6994,7 @@ const products = {
 
 
 class ProductService {
-    private productDS : Product[] = products.products;
+    private productDS : Product[] = products.products.slice(1, 10);
 
     get products(): Product[]{
         console.log("products found ", products.products.length);
