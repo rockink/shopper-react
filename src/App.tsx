@@ -6,11 +6,13 @@ import { ProductsComponent } from './product/components/Product';
 import productService from './product/ProductService';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { ProductDetailComponent } from './product/components/ProductDetailComponent';
+import { AppBar } from './appBar/AppBar';
 
 class App extends Component {
   render() {
     return (
       <Router>
+        <AppBar />
         <div className="App">
           <Route exact path="/product/:id" component={ProductDetailComponent} />
           <Route exact path="/" render={()=> <ProductsComponent products={productService.products} />} />
