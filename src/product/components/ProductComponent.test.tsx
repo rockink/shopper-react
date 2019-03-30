@@ -18,7 +18,7 @@ it('displays all the products ', () => {
   });
 
 it('display individual product', () => {
-    const product = productService.getProductById("1")!!;
+    const product = productService.getPaginatedProducts()[0];
 
     const wrapper = shallow(<ProductComponent product={product}/>);
     expect(wrapper.contains(product.name));

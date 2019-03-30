@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './appbar.css';
+import { AppBarCartComponent } from '../cart/AppBarCartComponent';
 
 export const AppBar = () => {
     return (
@@ -10,7 +11,7 @@ export const AppBar = () => {
                     APP-BAR
                 </div> 
                 <div className="right-column">
-                    LEFT-BAR
+                    <AppBarCartComponent />
                 </div>
             </div>
         </div>

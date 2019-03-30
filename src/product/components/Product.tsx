@@ -8,6 +8,7 @@ import { Button, CardActions, CardContent } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import Chip from '@material-ui/core/Chip';
+import cartService from '../../cart/CartService';
 
 export interface ProductComponentProp { product: Product, key?: any };
 export const ProductComponent = (productComponentProp: ProductComponentProp) => (
@@ -27,14 +28,17 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
                         
                     </div>
                     <p className="product-features-list">
-                        <p>{productComponentProp.product.opSys} Operating System</p>
+                        {productComponentProp.product.opSys} Operating System
                     </p>
 
                     <h1>${productComponentProp.product.price}</h1>
 
                 </div>
                 <CardActions>
-                    <Button className="material-button add-cart" variant="contained" color="primary" >Add To Cart</Button>
+                    <Button className="material-button add-cart" 
+                            onClick={()=>cartService.addProductToCart(productComponentProp.product)}
+                            variant="contained" 
+                            color="primary" >Add To Cart</Button>
                     <Link to={`/product/${productComponentProp.product.id}`}>
                         <Button className="material-button view-more" color="primary">View More</Button>
                     </Link>

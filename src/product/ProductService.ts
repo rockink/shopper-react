@@ -7013,7 +7013,7 @@ class ProductService {
         return product;
     }
 
-    getPaginatedProducts(paginationIdex: number): Product[]{
+    getPaginatedProducts(paginationIdex: number = 0): Product[]{
         if(paginationIdex == undefined) paginationIdex = 0;
 
         const products = this.allProducts
