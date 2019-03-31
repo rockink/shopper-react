@@ -9,17 +9,45 @@ import { ProductDetailComponent } from './product/components/ProductDetailCompon
 import { PaginationProducts } from './product/components/ProductPagination';
 import { AppBar } from './appBar/AppBar';
 import { CartComponent } from './cart/cartPage/CartComponent';
+import navigationService from './appBar/navigationComponents/NavigationService';
+import { ReactRouterProp } from './Utils';
+
+const NotImplemented = (props: ReactRouterProp) => <div><h1>NOT IMPLEMENTED</h1></div>
+
+
+/**
+ * Nav is a function that shows which page  
+ * the user is visiting right now. 
+ * 
+ * Based on navItem, if checks whether it is a static menu
+ * or the dynamic menu. Based on it, it changes the 
+ * menu context. 
+ * 
+ * @param component 
+ * @param navItem 
+ */
+const nav=(component: any, navItem: string)=>{
+  console.log("nav", navItem)
+  navigationService.setSelected(navItem)
+  return component;
+}
 
 class App extends Component {
+  
   render() {
+    console.log("pc", ProductDetailComponent)
     return (
       <Router>
         <AppBar />
         <div className="App">
-          <Route exact path="/product/:id" component={ProductDetailComponent} />
-          <Route exact path="/cart" component={CartComponent} />
-          <Route exact path="/" component={PaginationProducts} />
-
+           {/* deisgned to use render method,component 
+              is pretty generic and not satisfactory 
+              to pass the pros
+              in the upstream components. */}
+          <Route exact path="/product/:id" render={(props) => nav(<ProductDetailComponent  {...props}  />, "PRODUCT")} />
+          <Route exact path="/cart" render={(props) => nav(<CartComponent />, "CART")} />
+          <Route exact path="/dev" render={(props) => nav(<NotImplemented {...props}/>, "DEV")} />
+          <Route exact path="/" render={(props) => nav(<PaginationProducts  {...props}/>, "HOME")} />
         </div>
       </Router>
     );

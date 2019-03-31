@@ -4,11 +4,13 @@ import productService from '../ProductService';
 import queryString from 'query-string';
 
 import './productDetailComponent.css';
+import { RouterProps, match, StaticContext } from 'react-router';
+import { History, Location } from 'history';
+import { ReactRouterProp } from '../../Utils';
 
-export interface ProductDetailComponentProp{props: any, match: any};
 
-export const ProductDetailComponent = (productDetailComponentProp :ProductDetailComponentProp) => {
-    const productId = productDetailComponentProp.match.params.id;
+export const ProductDetailComponent = (props :ReactRouterProp ) => {
+    const productId = props.match.params.id;
     console.log("product Id ", productId);
 
     const  product = productService.getProductById(productId)!!;
