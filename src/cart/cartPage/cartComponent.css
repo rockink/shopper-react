@@ -1,0 +1,51 @@
+.cartItems > div {
+    border-bottom: solid 1px black;
+}
+
+.cartItem  {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    padding: 10px;
+}
+
+.left-section{
+    text-align: right;
+}
+
+.right-section * {
+    display: inline;
+}
+
+/* this is temporary  */
+.image-placeholder{
+    width : 120px;
+    background: #00bfd7;
+    height: 100%;
+    float: right;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.remove-button{
+    margin-top: 10px !important;
+}
+
+.quantity{
+    padding: 8px;
+}
+
+
+.componnets{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+@media (max-width: 900px) {
+    .componnets{
+        grid-template-columns: none;
+    }
+    
+}
+
+
+

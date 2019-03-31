@@ -8,14 +8,24 @@ import productService from '../product/ProductService';
 import cartService from './CartService';
 
 import {AppBarCartComponent} from "./AppBarCartComponent";
+import { StaticRouter } from 'react-router';
 
 Enzyme.configure({ adapter: new Adapter() }) 
+
+
+/**
+ * CartService already contains some test cartItems for development purpose. 
+ * This clears out the items before starting the test. 
+ */
+beforeEach(()=>{
+    cartService.clearCart();
+})
 
 it('cart should contain 1 item when 1 product is added ', () => {
     const anyProduct = productService.getPaginatedProducts()[0];
     cartService.addProductToCart(anyProduct);
 
-    const wrapper = mount(<AppBarCartComponent />)
+    const wrapper = mount(<StaticRouter><AppBarCartComponent /></StaticRouter>)
     console.log(wrapper.html());
 
     console.log(wrapper.find(".bottom-right").html());

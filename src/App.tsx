@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { ProductDetailComponent } from './product/components/ProductDetailComponent';
 import { PaginationProducts } from './product/components/ProductPagination';
 import { AppBar } from './appBar/AppBar';
+import { CartComponent } from './cart/cartPage/CartComponent';
 
 class App extends Component {
   render() {
@@ -16,7 +17,9 @@ class App extends Component {
         <AppBar />
         <div className="App">
           <Route exact path="/product/:id" component={ProductDetailComponent} />
+          <Route exact path="/cart" component={CartComponent} />
           <Route exact path="/" component={PaginationProducts} />
+
         </div>
       </Router>
     );

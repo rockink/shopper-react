@@ -1,21 +1,27 @@
 import { Product } from "../product/Domains";
 import productService from "../product/ProductService";
 
-import { observable, decorate, action, computed, toJS } from "mobx"
+import { observable, decorate, action, computed, toJS, remove } from "mobx"
 import { stringify } from "query-string";
 
 
 export class CartItem{
     product: Product
     count: number 
+
     constructor(product : Product, count : number){
         // console.log('adding product ', stringify(product), " and count ", count)
         this.product = product;
         this.count = count;
     }
+
+    get price(){
+        return this.count * this.product.price;
+    }
 }
 decorate(CartItem, {
-    count : observable
+    count : observable,
+    price: computed
 })
 
 
@@ -24,7 +30,13 @@ decorate(CartItem, {
  * without considering it. 
  */
 export class Cart{
-    cartItems: CartItem[] = []
+    /**
+     * Making cartItemms an observable array right in the field 
+     * to leverage the mobx api for array 
+     * particularly useful when deleting item from 
+     * array
+     */
+    cartItems  = observable.array<CartItem>([]);
 
     /**
      * Hey cart, add the product if the product is not already in the cart,
@@ -34,6 +46,7 @@ export class Cart{
      * @param count total count of the product present in the cart 
      */
     addProductToCart(product: Product, count: number){
+
         var cartProductList = this.cartItems.filter(cartItem => cartItem.product.id == product.id);
         console.log("cart productList ", cartProductList.length, 'adding count ', count);
 
@@ -48,7 +61,7 @@ export class Cart{
         }
 
         console.log("adding count ", count, "and count is ", cartProduct.count,  " ->for  cart product ", cartProduct.product.name)
-
+        return cartProduct;
     }
 
     /**
@@ -64,17 +77,64 @@ export class Cart{
         return totalCount;
     }
 
+
+    changeProductCount(product: Product, count: number){
+        const cartItemList = this.cartItems.filter(item => item.product.id == product.id);
+
+        // product is not there, nothing to be added 
+        if(cartItemList.length == 0) {
+            console.log("product ", product.id, "not there. Nothing to be added ")
+            return false;
+        }
+
+        const cart = cartItemList[0];
+        cart.count = count;
+
+    }
+
     clearCart(){
         while(this.cartItems.length != 0) {
             this.cartItems.pop();
         }
     }
 
+    /**
+     * This deals with cartItem rather than product, simply to use 
+     * the api that mobx provides to us. 
+     * There is no explicit delete api for JS array
+     * So, to maintain atomicity in changing the state 
+     * of the array, we use mobx array 
+     */
+    removeCartItem(cartItem: CartItem){
+        const removeStatus = this.cartItems.remove(cartItem);
+        console.log("removing cart Item ", removeStatus);
+    }
+
+    get itemsCost() {
+        return this.cartItems.map(item => item.price).reduce((sum, price)=> sum += price).toFixed(2);
+    }
+
+    /**
+     * Flat tax rate. 
+     */
+    get taxCharge() {
+        return "10";
+    }
+
+    get totalCharge() {
+        return (parseFloat(this.itemsCost) + parseFloat(this.taxCharge)).toFixed(2);
+    }
+
+
+
 }
 
 decorate(Cart, {
+    cartItemsCount: computed,
     cartItems: observable,
-    cartItemsCount: computed
+    itemsCost: computed,
+    taxCharge: computed,
+    totalCharge: computed
 })
 
 
@@ -86,17 +146,22 @@ class CartService{
     cart = new Cart();
 
     constructor(){
-        // this.addDummyProducts();
+        // using this during the cart development. This provides us with test data 
+        // to play with 
+        this.addDummyProducts();
     }
 
     addProductToCart(product: Product, count = 1){
         console.log("product ", product.name, "and count ", count)
-        this.cart.addProductToCart(product, count);
-        return true;
+        return this.cart.addProductToCart(product, count);
     }
 
     get countAllCartItems(){
         return this.cart.cartItemsCount;
+    }
+
+    changeProductCount(product: Product, count: number){
+        this.cart.changeProductCount(product, count);
     }
 
     private addDummyProducts(){
@@ -104,6 +169,10 @@ class CartService{
             .forEach(product => {
                 this.addProductToCart(product);
             });
+    }
+
+    removeCartItem(cartItem: CartItem){
+        this.cart.removeCartItem(cartItem);
     }
 
     clearCart(){

@@ -6,16 +6,22 @@ import './appBarCartComponent.css';
 import {observer} from 'mobx-react';
 
 import cartService from '../cart/CartService';
+import { Link } from 'react-router-dom';
 
 export const AppBarCartComponent = observer (() => {
     return (
         <div className="AppBarCartComponent">
-            <div className="app-barholder">
-                <Icon>shopping_cart</Icon>
-                <div className="bottom-right">
-                    {cartService.countAllCartItems}
+            <Link className="cart-link" to="/cart">
+                <div className="app-barholder">
+                    <div className="totalDisplay" >
+                        Total: ${cartService.cart.totalCharge}
+                    </div>
+                    <Icon>shopping_cart</Icon>
+                    <div className="bottom-right">
+                        {cartService.countAllCartItems}
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
     )
 })
