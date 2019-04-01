@@ -1,8 +1,12 @@
 import { Product } from "./Domains";
 import { promised } from "q";
+import { decorate, observable } from "mobx";
 
-
-const products = {
+/**
+ * for test purposes, this is datastore for 
+ * test data 
+ */
+export const products = {
     "products": [
         {
             "id": "320",
@@ -6996,7 +7000,7 @@ const products = {
 
 class ProductService {
     //displays only products that we are displaying in the front-end product components 
-    private productDS : Product[] = products.products.slice(1, 10);
+    private productDS = observable.array<Product>([]);
     
     // contains all the product 
     private allProducts = products.products;
@@ -7018,10 +7022,17 @@ class ProductService {
 
         const products = this.allProducts
             .slice(this.productDisplayCount * paginationIdex, this.productDisplayCount * ++paginationIdex);
-        this.productDS = products;
-
+        this.productDS.replace(products);
         return products;
 
+    }
+
+    /**
+     * 
+     * @param products will replace the current datastore 
+     */
+    setProducts(products: Product[]){
+        this.productDS.replace(products);
     }
 }
 
