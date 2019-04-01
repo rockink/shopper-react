@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## DEMO
+Checkout at a site hosted in Firebase:
+https://shopping-4cc5e.firebaseapp.com 
+
+
 ### React FrontEnd: E-Commerce Website 
 This website is an illustration of how React is used to develop a e-commerce website. It is based on React and its eco-system. 
 
