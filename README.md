@@ -37,6 +37,11 @@ which updates the build folder with the new build.
 `docker build -t shopper:v1 .`
 
 ##### Run the Image 
+Ensure that network is present. If not create a new one 
+`docker network create -d bridge mynetwork` 
+
+
+Now create the image/run container 
 `docker run -d -p 80:80 --name static --network mynetwork  shopper:v1 `
 
 Now test in http://localhost:80 
