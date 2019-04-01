@@ -28,3 +28,15 @@ Project is divied into 2 tiers- backend and frontend. Backend provides functiona
 
 
 
+# Building and running in Docker 
+##### First Build the project 
+`npm run build` 
+which updates the build folder with the new build. 
+
+##### Create Docker image 
+`docker build -t shopper:v1 .`
+
+##### Run the Image 
+`docker run -d -p 80:80 shopper:v1`
+
+Now test in http://localhost:80 
