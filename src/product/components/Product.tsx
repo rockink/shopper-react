@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 
 import Chip from '@material-ui/core/Chip';
 import cartService from '../../cart/CartService';
+import { observer } from 'mobx-react';
+
 
 export interface ProductComponentProp { product: Product, key?: any };
 export const ProductComponent = (productComponentProp: ProductComponentProp) => (
@@ -49,11 +51,11 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
 )
 
 export interface ProductsProps { products: Product[] }
-export const ProductsComponent = (productProps: ProductsProps) => (
+export const ProductsComponent = observer ((productProps: ProductsProps) => (
     <div className="ProductsComponent">
         {
             productProps.products
                 .map((product, i) => <ProductComponent product={product} key={i} />)
         }
     </div>
-)
+))

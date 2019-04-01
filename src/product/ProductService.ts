@@ -1,6 +1,8 @@
 import { Product } from "./Domains";
 import { promised } from "q";
-import { decorate, observable } from "mobx";
+import { decorate, observable, computed } from "mobx";
+
+import axios from "axios";
 
 /**
  * for test purposes, this is datastore for 
@@ -7003,7 +7005,7 @@ class ProductService {
     private productDS = observable.array<Product>([]);
     
     // contains all the product 
-    private allProducts = products.products;
+    private allProducts = [];
 
     private productDisplayCount: number = 10;
 
@@ -7020,11 +7022,24 @@ class ProductService {
     getPaginatedProducts(paginationIdex: number = 0): Product[]{
         if(paginationIdex == undefined) paginationIdex = 0;
 
+        if(this.allProducts.length != 0) return this.paginate(paginationIdex)
+        
+        axios.get("/api/products")
+            .then(res => res.data)
+            .then(productsJON => this.allProducts = productsJON )
+            .then(result => this.paginate(paginationIdex))
+            .catch(err=> console.log("error reporting while fetching ", err));
+         
+        // empty one initially, because this will load asychronously 
+        return this.productDS;
+    }
+
+    private paginate(paginationIdex: number){
         const products = this.allProducts
             .slice(this.productDisplayCount * paginationIdex, this.productDisplayCount * ++paginationIdex);
+        console.log("paginate ", products.length);
         this.productDS.replace(products);
         return products;
-
     }
 
     /**
@@ -7035,6 +7050,10 @@ class ProductService {
         this.productDS.replace(products);
     }
 }
+
+decorate(ProductService, {
+    products: computed
+})
 
 const productService = new ProductService();
 
