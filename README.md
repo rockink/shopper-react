@@ -37,6 +37,6 @@ which updates the build folder with the new build.
 `docker build -t shopper:v1 .`
 
 ##### Run the Image 
-`docker run -d -p 80:80 --name static shopper:v1 `
+`docker run -d -p 80:80 --name static --network mynetwork  shopper:v1 `
 
 Now test in http://localhost:80 
