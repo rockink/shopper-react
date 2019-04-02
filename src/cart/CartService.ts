@@ -111,6 +111,8 @@ export class Cart{
     }
 
     get itemsCost() {
+        //handling empty length error
+        if(this.cartItems.length == 0) return 0+"";
         return this.cartItems.map(item => item.price).reduce((sum, price)=> sum += price).toFixed(2);
     }
 

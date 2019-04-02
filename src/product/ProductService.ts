@@ -1,8 +1,14 @@
 import { Product } from "./Domains";
 import { promised } from "q";
+import { decorate, observable, computed } from "mobx";
 
+import axios from "axios";
 
-const products = {
+/**
+ * for test purposes, this is datastore for 
+ * test data 
+ */
+export const products = {
     "products": [
         {
             "id": "320",
@@ -6996,10 +7002,10 @@ const products = {
 
 class ProductService {
     //displays only products that we are displaying in the front-end product components 
-    private productDS : Product[] = products.products.slice(1, 10);
+    private productDS = observable.array<Product>([]);
     
     // contains all the product 
-    private allProducts = products.products;
+    private allProducts = [];
 
     private productDisplayCount: number = 10;
 
@@ -7016,14 +7022,38 @@ class ProductService {
     getPaginatedProducts(paginationIdex: number = 0): Product[]{
         if(paginationIdex == undefined) paginationIdex = 0;
 
+        if(this.allProducts.length != 0) return this.paginate(paginationIdex)
+        
+        axios.get("/api/products")
+            .then(res => res.data)
+            .then(productsJON => this.allProducts = productsJON )
+            .then(result => this.paginate(paginationIdex))
+            .catch(err=> console.log("error reporting while fetching ", err));
+         
+        // empty one initially, because this will load asychronously 
+        return this.productDS;
+    }
+
+    private paginate(paginationIdex: number){
         const products = this.allProducts
             .slice(this.productDisplayCount * paginationIdex, this.productDisplayCount * ++paginationIdex);
-        this.productDS = products;
-
+        console.log("paginate ", products.length);
+        this.productDS.replace(products);
         return products;
+    }
 
+    /**
+     * 
+     * @param products will replace the current datastore 
+     */
+    setProducts(products: Product[]){
+        this.productDS.replace(products);
     }
 }
+
+decorate(ProductService, {
+    products: computed
+})
 
 const productService = new ProductService();
 
