@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+If you are looking to see a standalone demo of the app, 
+*which does not connect to the server*, checkout the [`v1 tag`](https://github.com/rockink/shopper-react/tree/v1.0). 
+
+`git checkout v1.0`
+
+## DEMO for v1
+Checkout at a site hosted in Firebase:
+https://shopping-4cc5e.firebaseapp.com 
+
+
+For the current version which connects to the server is explained below. 
+
 ### React FrontEnd: E-Commerce Website 
 This website is an illustration of how React is used to develop a e-commerce website. It is based on React and its eco-system. 
 
@@ -10,10 +22,11 @@ This website is an illustration of how React is used to develop a e-commerce web
 ## Architecture 
 Project is divied into 2 tiers- backend and frontend. Backend provides functionalities and Front-end renders those functionalities. 
 
-1. Services such as CartService, ProductService exposes the API to interact with the state of the application. It is made reactive using the MobX library. 
-2. Front-End is built using React. They simply are the components that subscribe to the data exposed by the Service APIs. 
+1. Front-End is built using React. They simply are the components that subscribe to the data exposed by the Service APIs. 
+2. Services such as CartService, ProductService exposes the API to interact with the state of the application. It is made reactive using the MobX library. 
+3. ProductService calls the Api-Gateway to populate the products. 
 
-![image](https://user-images.githubusercontent.com/8319308/55294939-c208b200-53d5-11e9-9295-12bbc2e83c15.png)
+![image](https://user-images.githubusercontent.com/8319308/55368160-70882200-54be-11e9-9dad-938197f97fb1.png)
 
 
 
@@ -34,14 +47,36 @@ Project is divied into 2 tiers- backend and frontend. Backend provides functiona
 which updates the build folder with the new build. 
 
 ##### Create Docker image 
-`docker build -t shopper:v1 .`
+`docker build -t rockink/shopper:v2 .`
 
 ##### Run the Image 
 Ensure that network is present. If not create a new one 
 `docker network create -d bridge mynetwork` 
 
-
 Now create the image/run container 
-`docker run -d -p 80:80 --name static --network mynetwork  shopper:v1 `
+`docker run -d -p 80:80 --name static --network mynetwork  rockink/shopper:v2 `
 
-Now test in http://localhost:80 
+
+# Run with Complete Microservice 
+With this architecture, it is expected to run all the dependent components as well. 
+
+![image](https://user-images.githubusercontent.com/8319308/55299897-16765680-5403-11e9-8bab-a471f58fa42a.png)
+
+### API-Gateway 
+Run the api-gateway 
+
+`docker run -e "JAVA_TOOL_OPTIONS=-Xms200m -Xmx200m" -p 8080:8080 --name product --network mynetwork rockink/product:v1`
+
+Run Static content 
+
+`docker run -d -p 80:80 --name static --network mynetwork  rockink/shopper:v2`
+
+
+
+Run Product Service 
+
+`docker run -d -p 8080:8080 --name product --network mynetwork rockink/product:v1`
+
+
+Now test in http://localhost:8090
+
