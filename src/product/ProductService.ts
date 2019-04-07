@@ -7005,7 +7005,7 @@ class ProductService {
     private productDS = observable.array<Product>([]);
     
     // contains all the product 
-    private allProducts = [];
+    private allProducts = products.products;
 
     private productDisplayCount: number = 10;
 

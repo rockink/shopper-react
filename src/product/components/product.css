@@ -1,7 +1,7 @@
 .product{
     display: inline-block;
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 250px 5fr;
 }
 
 @media (max-width: 480px) {
@@ -51,6 +51,10 @@
     background: #00bbd3 !important;
 }
 
+.laptopImage{
+    width: 100%;
+    height: 100%;
+}
 .view-more{
     /* color: #00bfd7 !important;; */
 }

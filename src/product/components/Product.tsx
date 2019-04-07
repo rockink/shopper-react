@@ -17,7 +17,8 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
     <Card className="product-wrapper">
         <div className="product">
             <div className="left-component">
-                    <p style={{background: 'rgb(232, 233, 232)', height:'100%', margin: '0px'}}></p>
+                    {/* <p style={{background: 'rgb(232, 233, 232)', height:'100%', margin: '0px'}}></p> */}
+                    <img className="laptopImage" src={'/laptop.jpg'} height='100%' />
             </div>
             <CardContent className="right-component">
                 <div className="descriptions">
@@ -53,6 +54,7 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
 export interface ProductsProps { products: Product[] }
 export const ProductsComponent = observer ((productProps: ProductsProps) => (
     <div className="ProductsComponent">
+        <h1>Browse the Products</h1>
         {
             productProps.products
                 .map((product, i) => <ProductComponent product={product} key={i} />)
