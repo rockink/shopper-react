@@ -7,8 +7,17 @@
 @media (max-width: 480px) {
     .product{
         /* display: block; */
-        grid-template-columns: none;
-        grid-template-rows: 200px 1fr;
+        grid-template-columns: 100px 5fr;
+        /* grid-template-rows: 400px 1fr; */
+    }
+
+    .laptopImage{
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .card-actions {
+        display: grid !important;
     }
     
 }
@@ -55,6 +64,13 @@
     width: 100%;
     height: 100%;
 }
+
+.left-component{
+    background: white;
+    text-align: center;
+}
+
+
 .view-more{
     /* color: #00bfd7 !important;; */
 }

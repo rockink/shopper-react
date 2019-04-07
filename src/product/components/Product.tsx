@@ -37,14 +37,18 @@ export const ProductComponent = (productComponentProp: ProductComponentProp) => 
                     <h1>${productComponentProp.product.price}</h1>
 
                 </div>
-                <CardActions>
+                <CardActions className="card-actions">
+                    <div>
                     <Button className="material-button add-cart" 
                             onClick={()=>cartService.addProductToCart(productComponentProp.product)}
                             variant="contained" 
                             color="primary" >Add To Cart</Button>
+                    </div>
+                    <div>
                     <Link to={`/product/${productComponentProp.product.id}`}>
                         <Button className="material-button view-more" color="primary">View More</Button>
                     </Link>
+                    </div>
                 </CardActions>
             </CardContent>
         </div>
