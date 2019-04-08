@@ -11,6 +11,7 @@ import { AppBar } from './appBar/AppBar';
 import { CartComponent } from './cart/cartPage/CartComponent';
 import navigationService from './appBar/navigationComponents/NavigationService';
 import { ReactRouterProp } from './Utils';
+import { HomeProductComponent } from './product/HomeProductComponent';
 
 const NotImplemented = (props: ReactRouterProp) => <div><h1>NOT IMPLEMENTED</h1></div>
 
@@ -35,7 +36,6 @@ const nav=(component: any, navItem: string)=>{
 class App extends Component {
   
   render() {
-    console.log("pc", ProductDetailComponent)
     return (
       <Router>
         <AppBar />
@@ -47,7 +47,7 @@ class App extends Component {
           <Route exact path="/product/:id" render={(props) => nav(<ProductDetailComponent  {...props}  />, "PRODUCT")} />
           <Route exact path="/cart" render={(props) => nav(<CartComponent />, "CART")} />
           <Route exact path="/dev" render={(props) => nav(<NotImplemented {...props}/>, "DEV")} />
-          <Route exact path="/" render={(props) => nav(<PaginationProducts  {...props}/>, "HOME")} />
+          <Route exact path="/" render={(props) => nav(<HomeProductComponent  {...props}/>, "HOME")} />
         </div>
       </Router>
     );

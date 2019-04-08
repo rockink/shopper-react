@@ -7000,7 +7000,7 @@ export const products = {
 };
 
 
-class ProductService {
+export class ProductService {
     //displays only products that we are displaying in the front-end product components 
     private productDS = observable.array<Product>([]);
     
@@ -7048,6 +7048,10 @@ class ProductService {
      */
     setProducts(products: Product[]){
         this.productDS.replace(products);
+    }
+
+    getAllProducts(){
+        return this.allProducts;
     }
 }
 
