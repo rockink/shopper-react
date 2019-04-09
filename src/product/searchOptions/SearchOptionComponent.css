@@ -1,0 +1,45 @@
+
+
+
+
+@media (max-width: 480px) {
+    .filterOptions{
+        display: none;
+    }
+
+    .SearchFilter .header *{
+        display: inline-block;
+        margin: 4px;
+    }
+
+    .header-icon{
+        display: inline-block;
+    }
+
+    .filter-open{
+        display: block;
+    }
+
+    .filter-close{
+        display: none;
+    }
+}
+
+.header-icon{
+    display: none;
+    text-align: right;
+}
+
+.SearchFilter .header{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.filter-list{
+    padding: 4px;
+}
+
+.filter-list li{
+    list-style: none;
+    padding: 3px;
+}

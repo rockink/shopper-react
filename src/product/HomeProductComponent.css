@@ -1,5 +1,15 @@
 .HomeProductComponent{
     display: grid;
     grid-template-columns: 1fr 4fr;
+}
 
+@media (max-width: 480px) {
+    .HomeProductComponent{
+        display: grid;
+        grid-template-columns: none;
+    }
+}
+
+.HomeProductComponent > div {
+    margin: 20px;
 }
