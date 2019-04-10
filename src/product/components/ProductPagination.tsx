@@ -12,9 +12,9 @@ export const PaginationProducts = (props: ReactRouterMatch) => {
   var pageParam = queryString.parse(location.search) as any;
   const pageIndex = pageParam.page;
 
-  // this will hit the action to get the other products.. 
-  // we will use this to display the products 
-  const products = productService.getPaginatedProducts(pageIndex);
+  // products is observable, therefore, this will automatically 
+  // be refreshed once the data changes. 
+  const products = productService.products;
 
   return (
   <div className="PaginationProducts">

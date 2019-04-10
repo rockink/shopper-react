@@ -7000,42 +7000,78 @@ export const products = {
 };
 
 
+
 export class ProductService {
     //displays only products that we are displaying in the front-end product components 
-    private productDS = observable.array<Product>([]);
-    
+    productDS = observable.array<Product>([], { deep: false });
+
     // contains all the product 
-    private allProducts = products.products;
+    private readonly allProducts = products.products;
+    private selectedProducts: Product[] = products.products
 
     private productDisplayCount: number = 10;
 
-    get products(): Product[]{
+    get products(): Product[] {
         console.log("products found ", products.products.length);
         return this.productDS;
     }
 
     getProductById(id: String) {
-        const product = this.productDS.find(product => product.id == id );
+        const product = this.productDS.find(product => product.id == id);
         return product;
     }
 
-    getPaginatedProducts(paginationIdex: number = 0): Product[]{
-        if(paginationIdex == undefined) paginationIdex = 0;
+    getPaginatedProducts(paginationIdex: number = 0): Product[] {
+        if (paginationIdex == undefined) paginationIdex = 0;
 
-        if(this.allProducts.length != 0) return this.paginate(paginationIdex)
-        
-        axios.get("/api/products")
-            .then(res => res.data)
-            .then(productsJON => this.allProducts = productsJON )
-            .then(result => this.paginate(paginationIdex))
-            .catch(err=> console.log("error reporting while fetching ", err));
-         
+        console.log("paginating products ", paginationIdex);
+
+        if (this.selectedProducts.length != 0) {
+            console.log("allProducts size ", this.selectedProducts.length);
+            return this.paginate(paginationIdex)
+        }
+
+        // axios.get("/api/products")
+        //     .then(res => res.data)
+        //     .then(productsJON => this.allProducts = productsJON )
+        //     .then(result => this.paginate(paginationIdex))
+        //     .catch(err=> console.log("error reporting while fetching ", err));
+
         // empty one initially, because this will load asychronously 
         return this.productDS;
     }
 
-    private paginate(paginationIdex: number){
-        const products = this.allProducts
+    /**
+     * 
+     * 
+     * @param products the products that we want to display as selected products in the home screen 
+     */
+    private setSelectedProducts(products: Product[]) {
+        this.selectedProducts = products;
+    }
+
+    /**
+     * 
+     * @param selectedBrands given a selectedBrands, show only those product, if empty, show all products 
+     * 
+     */
+    getOnlySelectedProducts(selectedBrands: string[]) {
+        //when no brands is selected, select all and display!
+        if (selectedBrands.length == 0) {
+            this.setSelectedProducts(this.allProducts);
+            this.getPaginatedProducts(0);
+            return;
+        }
+
+        console.log("selectedBrands: ", selectedBrands);
+        const products = this.allProducts.filter(product => selectedBrands.indexOf(product.company) != -1)
+        console.log("products selected length: ", products.length);
+        this.selectedProducts = products;
+        this.getPaginatedProducts(0);
+    }
+
+    private paginate(paginationIdex: number) {
+        const products = this.selectedProducts
             .slice(this.productDisplayCount * paginationIdex, this.productDisplayCount * ++paginationIdex);
         console.log("paginate ", products.length);
         this.productDS.replace(products);
@@ -7046,11 +7082,11 @@ export class ProductService {
      * 
      * @param products will replace the current datastore 
      */
-    setProducts(products: Product[]){
+    setProducts(products: Product[]) {
         this.productDS.replace(products);
     }
 
-    getAllProducts(){
+    getAllProducts() {
         return this.allProducts;
     }
 }

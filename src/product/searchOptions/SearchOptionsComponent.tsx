@@ -3,31 +3,40 @@ import searchComponentService, { Filter } from './SearchComponentService';
 
 import './SearchOptionComponent.css';
 import { Icon } from '@material-ui/core';
+import productService from '../ProductService';
 
 interface SearchFilterProps { filter: Filter }
-interface SearchFilterState{isOpen: false}
 
 const SearchFilterComponent = (props: SearchFilterProps) => {
     const { filter } = props;
-    const [state, setToggleOn] = useState({isOpen: false});
-    const [selectedState, setSelected] = useState<boolean[]>([]);
-    const icon = state.isOpen ? "minimize": "add";
+
+    //whether the filter is expanded or collaped. 
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    //delcare the unchecked boxes initially 
+    const [selectedState, setSelected] = useState<boolean[]>(new Array(filter.filterOptions.length).fill(false));
+
+    const icon = isExpanded ? "minimize" : "add";
     return (
         <div className="SearchFilter">
             <div className="header">
                 <p>{filter.name}</p>
-                <p onClick={e=>setToggleOn({isOpen: !state.isOpen})} className="header-icon"><Icon>{icon}</Icon></p>
+                <p onClick={e => setIsExpanded(!isExpanded)} className="header-icon"><Icon>{icon}</Icon></p>
             </div>
-            <div className={`filterOptions ${state.isOpen?"filter-open":"filter-close"}`}>
+            <div className={`filterOptions ${isExpanded ? "filter-open" : "filter-close"}`}>
                 <ul className="filter-list">
                     {filter.filterOptions.map((brand, i) => (
-                        <li key={i} onClick={e=>{
-                            setSelected(state=>{
-                                state[i] = state[i] === undefined ? true : !state[i]
-                                return [...state];
-                            })}} >
+                        <li key={i} onClick={e => {
+                            selectedState[i] = !selectedState[i];
+                            setSelected(state => [...selectedState]);
 
-                            <input defaultChecked={selectedState[i]} type="checkbox"  /> {brand.key} ({brand.count})</li>
+                            //tell productService to update the list of selected products only 
+                            productService.getOnlySelectedProducts(
+                                selectedState.map((isSelected, index) => (isSelected ? filter.filterOptions[index].key : "")).filter(s => s.length > 0)
+                            );
+
+                        }} >
+                            <p className={selectedState[i] ? "selected" : ""}> {brand.key} ({brand.count}) </p></li>
                     ))}
                 </ul>
             </div>

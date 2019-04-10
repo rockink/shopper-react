@@ -43,3 +43,8 @@
     list-style: none;
     padding: 3px;
 }
+
+.selected{
+    font-weight: bold;
+    font-size: 22px;
+}
